@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sam_protoype",
-    "slug": "sam_protoype",
+    "name": "samProtoype",
+    "slug": "samProtoype",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
