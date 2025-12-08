@@ -1,15 +1,10 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import Home from "./pages/Home";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Polla</Text>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Home/>
     </View>
   );
 }
