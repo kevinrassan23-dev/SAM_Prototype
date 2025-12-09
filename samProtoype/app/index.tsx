@@ -1,15 +1,11 @@
-import { Text, View } from "react-native";
+import { Redirect } from "expo-router";
 
-export default function Index() {
+function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Polla</Text>
-    </View>
+
+    // Importamos la ruta padre el índice de la aplicación 
+    // como la primera que aparece
+    <Redirect href="./home"/>
   );
 }
+export default Index;
