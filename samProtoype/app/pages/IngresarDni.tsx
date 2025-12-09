@@ -1,7 +1,7 @@
-import {useState} from "react";
-import {Text, View, Pressable, StyleSheet, TextInput} from 'react-native';
-import {router} from "expo-router";
-import customTheme from "../theme/Theme"
+import { router } from "expo-router";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import customTheme from "../theme/Theme";
 
 // Importamos el tema
 

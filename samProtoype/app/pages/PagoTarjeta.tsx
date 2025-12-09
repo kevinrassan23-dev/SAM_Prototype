@@ -1,7 +1,7 @@
-import { useLocalSearchParams, router } from "expo-router";
-import { View, Text, TextInput, Pressable, StyleSheet } from "react-native";
-import { useState } from "react";
-import customTheme from "../theme/Theme"
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import customTheme from "../theme/Theme";
 
 const styles = StyleSheet.create({
         container: {

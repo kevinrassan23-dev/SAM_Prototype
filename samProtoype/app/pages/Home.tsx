@@ -1,7 +1,8 @@
-import {Text, View, Pressable, StyleSheet} from 'react-native';
-import {router} from "expo-router";
-import Menu from "../components/Menu"
-import customTheme from "../theme/Theme"
+import { router } from "expo-router";
+import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Menu from "../components/Menu";
+import customTheme from "../theme/Theme";
 
 // Importamos el tema
 

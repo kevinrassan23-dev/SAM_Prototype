@@ -1,10 +1,58 @@
-import { Button } from "@react-navigation/elements";
 import { router } from "expo-router";
-import { useState } from "react";
-import { Text, TextInput, View } from "react-native";
-import Menu from "../components/Menu";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import customTheme from "../theme/Theme";
 
-export default function IngresarCart() {
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: customTheme.spacing(2),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: customTheme.colors.background,
+    },
+    label: {
+        fontSize: customTheme.fontSize.normal,
+        fontWeight: "600",
+        marginBottom: customTheme.spacing(1),
+        color: customTheme.colors.primary,
+    },
+    input: {
+        width: "100%",
+        backgroundColor: "#FFFFFF",
+        borderWidth: 2,
+        borderColor: customTheme.colors.primary,
+        borderRadius: 8,
+        padding: customTheme.spacing(1.5),
+        fontSize: customTheme.fontSize.normal,
+        color: customTheme.colors.textPrimary,
+        marginBottom: customTheme.spacing(2),
+    },
+    button: {
+        backgroundColor: customTheme.colors.secondary,
+        paddingVertical: customTheme.spacing(2),
+        borderRadius: 8,
+        marginBottom: customTheme.spacing(2),
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    buttonCancelar: {
+        backgroundColor: customTheme.colors.error,
+        paddingVertical: customTheme.spacing(2),
+        borderRadius: 8,
+        marginTop: customTheme.spacing(1),
+        alignItems: "center",
+    },
+
+    buttonText: {
+        color: customTheme.colors.textSecondary,
+        fontSize: customTheme.fontSize.normal,
+        fontWeight: "bold",
+    },
+});
+
+function IngresarCart() {
     const [cartilla, setcartilla] = useState({
         Nºcart: '',
     });
@@ -27,20 +75,23 @@ export default function IngresarCart() {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={styles.container}>
 
-            <Menu />
+            <Text style={styles.label}>Ingrese el número de su cartilla sanitaria</Text>
 
-            <Text style={{ marginBottom: 25, fontSize: 20 }}>Ingrese el número de su cartilla sanitaria</Text>
+            <TextInput placeholder="Nº Cartilla" value={cartilla.Nºcart} onChangeText={cambios} style={styles.input} />
 
-            <TextInput placeholder="Nº Cartilla" value={cartilla.Nºcart} onChangeText={cambios} style={{ borderWidth: 1, width: 300, fontSize: 30 }} />
+            <View>
+                <Pressable style={[styles.buttonCancelar]} onPress={cancelar}>
+                    <Text style={styles.buttonText}>Cancelar</Text>
+                </Pressable>
 
-            <View style={{ flexDirection: "row" }}>
-                <Button style={{ marginTop: 25, marginRight: 35, width: 150 }} onPress={cancelar}>Cancelar</Button>
-
-                <Button style={{ marginTop: 25, width: 150 }} onPress={aceptar}>Aceptar</Button>
-
+                <Pressable style={styles.button} onPress={aceptar}>
+                    <Text style={styles.buttonText}>Aceptar</Text>
+                </Pressable>
             </View>
         </View>
     );
 }
+
+export default IngresarCart;

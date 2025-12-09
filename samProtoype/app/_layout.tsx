@@ -1,8 +1,7 @@
 import { Stack } from "expo-router";
+import React from "react";
 
 function RootLayout() {
-  // Usamos el stack para navegar directaamente entre las rutas hijas y pade 
-  // directamente desde los botones
-  return <Stack />;
+    return <Stack />;
 }
 export default RootLayout;

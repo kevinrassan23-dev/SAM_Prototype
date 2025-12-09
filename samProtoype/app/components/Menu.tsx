@@ -1,8 +1,7 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { Appbar, Drawer } from 'react-native-paper';
-
 
 
 export default function Menu() {
@@ -16,17 +15,12 @@ export default function Menu() {
 
     const [menuAdminuser, setmenuAdminuser] = useState(false)
 
-    const menudesesión = () => {
-        setmenuAdminuser(!menuAdminuser)
-        if (!menuAdminuser) setmenuNav(false);
-    }
-
     return (
         <View style={{ flex: 1, alignItems: "center", position: "absolute", top: 0, left: 0, right: 0, zIndex: 1, elevation: 1 }}>
             <Appbar.Header>
                 <Appbar.Action icon="magnify" onPress={menudenavgacion} />
                 <Appbar.Content title="Barra de navegación del administrador" />
-                <Appbar.Action icon="logout" onPress={menudesesión} />
+                <Appbar.Action icon="logout"  />
             </Appbar.Header>
 
 
@@ -44,14 +38,6 @@ export default function Menu() {
                         <Drawer.Item label="confirmación" onPress={() => router.push("/pages/Confirmacion")} />
                         <Drawer.Item label="login" onPress={() => router.push("/pages/LoginAdmin")} />
                         <Drawer.Item label="Añadir al sam" onPress={() => router.push("/pages/AdminSam")} />
-                    </Drawer.Section>
-                </View>
-            )}
-
-            {menuAdminuser && (
-                <View>
-                    <Drawer.Section style={{ backgroundColor: "white", marginLeft: 199 }}>
-                        <Drawer.Item label="Cerrar sesión de administrador" />
                     </Drawer.Section>
                 </View>
             )}

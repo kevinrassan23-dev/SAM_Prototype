@@ -1,7 +1,8 @@
-import {ScrollView, StyleSheet} from 'react-native';
-import Dashboard from "../components/Dashboard"
-import Menu from "../components/Menu"
-import customTheme from "../theme/Theme"
+import React from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import Dashboard from "../components/Dashboard";
+import Menu from "../components/Menu";
+import customTheme from "../theme/Theme";
 
 const styles = StyleSheet.create({
     container:{

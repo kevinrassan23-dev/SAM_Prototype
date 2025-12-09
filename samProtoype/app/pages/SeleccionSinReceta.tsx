@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {View, Text, ScrollView, Pressable, StyleSheet} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
-import {router} from "expo-router";
-import customTheme from "../theme/Theme"
+import customTheme from "../theme/Theme";
 
 // Importamos el tema
 
