@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function pagoEfectivo() {
+function pagoEfectivo() {
     const [pagos, setpagos] = useState({
         pago: '',
     });
@@ -99,3 +99,5 @@ export default function pagoEfectivo() {
         </View>
     );
 }
+
+export default pagoEfectivo;

@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function FormasPago() {
+function FormasPago() {
 
     const efectivo = () => {
         router.push("/pages/PagoEfectivo");
@@ -78,3 +78,5 @@ export default function FormasPago() {
         </View>
     );
 }
+
+export default FormasPago;

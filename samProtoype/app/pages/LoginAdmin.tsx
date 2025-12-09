@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default function adminlogin() {
+function adminlogin() {
     const [admin, setadmin] = useState({
         usuario: '',
         contraseña: ''
@@ -114,3 +114,4 @@ export default function adminlogin() {
         </View>
     );
 }
+export default adminlogin;

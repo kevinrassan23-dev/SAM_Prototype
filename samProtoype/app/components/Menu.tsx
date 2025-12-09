@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Appbar, Drawer } from 'react-native-paper';
 
 
-export default function Menu() {
+function Menu() {
 
     const [menuNav, setmenuNav] = useState(false)
 
@@ -44,3 +44,5 @@ export default function Menu() {
         </View>
     );
 }
+
+export default Menu;
