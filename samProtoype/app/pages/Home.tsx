@@ -1,34 +1,67 @@
-import { Button } from "@react-navigation/elements";
-import { router } from "expo-router";
-import { Text, View } from "react-native";
-import Menu from "../components/Menu";
+import {Text, View, Pressable, StyleSheet} from 'react-native';
+import {router} from "expo-router";
+import Menu from "../components/Menu"
+import customTheme from "../theme/Theme"
 
-export default function home() {
+// Importamos el tema
 
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            padding: customTheme.spacing(2),
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: customTheme.colors.background,
+        },
 
-    const receta = () => {
-        router.push("/pages/IngresarCartilla")
-    }
-    const sinreceta = () => {
-        router.push("/pages/IngresarDni")
-    }
+        title: {
+            fontSize: customTheme.fontSize.title,
+            fontWeight: "bold",
+            marginBottom: customTheme.spacing(3),
+            textAlign: "center",
+            color: customTheme.colors.primary,
+        },
 
-    const admin = () => {
-        router.push("/pages/LoginAdmin")
-    }
+        button: {
+            backgroundColor: customTheme.colors.secondary,
+            width: "80%",
+            paddingVertical: customTheme.spacing(2),
+            borderRadius: 10,
+            marginBottom: customTheme.spacing(2),
+            alignItems: "center",
+            justifyContent: "center",
+        },
 
-    return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        buttonText: {
+            color: customTheme.colors.textSecondary,
+            fontSize: customTheme.fontSize.normal,
+            fontWeight: "600",
+        },
+    });
 
-            <Menu />
+function Home(){
+    // Pegar el tema
+    return(
+        <View style={styles.container}>
 
-            <Text style={{ marginBottom: 25, fontSize: 20 }}>Home</Text>
+            {/*Importamos el menú oculto */}
+            <Menu/>
 
-            <View style={{ flexDirection: "row" }}>
-                <Button style={{ marginTop: 25, width: 150 }} onPress={receta}>receta</Button>
-                <Button style={{ marginTop: 25, width: 150 }} onPress={sinreceta}>sin receta</Button>
-                <Button style={{ marginTop: 25, width: 150 }} onPress={admin}>admin</Button>
-            </View>
+            {/* Texto arriba */}
+            <Text style={styles.title}>Seleccione una opción:</Text>
+
+            {/* Botones */}
+            {/* Usamos router.push(/ruta) para navegar a la siguiente página */}
+            <Pressable style={styles.button} onPress={() => router.push("/pages/IngresarCartilla")}>
+                <Text style={styles.buttonText}>Con receta</Text>
+            </Pressable>
+
+            {/* Usamos router.push(/ruta) para navegar a la siguiente página */}
+            <Pressable style={styles.button} onPress={() => router.push("/pages/IngresarDni")}>
+                <Text style={styles.buttonText}>Sin receta</Text>
+            </Pressable>
         </View>
     );
 }
+
+export default Home;

@@ -1,24 +1,32 @@
-import { Button } from "@react-navigation/elements";
-import { router } from "expo-router";
-import { Text, View } from "react-native";
-import Menu from "../components/Menu";
+import {ScrollView, StyleSheet} from 'react-native';
+import Dashboard from "../components/Dashboard"
+import Menu from "../components/Menu"
+import customTheme from "../theme/Theme"
 
-export default function adminsam() {
-
-    const volver = () => {
-        router.push("/pages/Home")
+const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        padding: customTheme.spacing(2),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: customTheme.colors.background,
     }
+})
 
-    return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+function AdminSam() {
 
-            <Menu />
+    return(
+        //ScrollView es un componente que lo que hace es 
+        // extender la pantalla deslizable hacia abajo si 
+        // se añade muchos componentes en la pantalla, ideal para el Dashboard
+        // Posible reciclar en selección con medicamentos sin receta y con receta
+        <ScrollView style={styles.container}>
+            <Menu/>
+            <Dashboard/>
 
-            <Text style={{ marginBottom: 25, fontSize: 20 }}>adminSam</Text>
-
-            <View style={{ flexDirection: "row" }}>
-                <Button style={{ marginTop: 25, width: 150 }} onPress={volver}>volver</Button>
-            </View>
-        </View>
+        </ScrollView>
     );
+
+
 }
+export default AdminSam;

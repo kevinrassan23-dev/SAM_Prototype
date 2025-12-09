@@ -1,30 +1,165 @@
-import { Button } from "@react-navigation/elements";
-import { router } from "expo-router";
-import { Text, View } from "react-native";
-import Menu from "../components/Menu";
+import { useLocalSearchParams, router } from "expo-router";
+import { View, Text, TextInput, Pressable, StyleSheet } from "react-native";
+import { useState } from "react";
+import customTheme from "../theme/Theme"
 
-export default function pagotarjeta() {
+const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            padding: customTheme.spacing(2),
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: customTheme.colors.background,
+        },
+
+        title: {
+            fontSize: customTheme.fontSize.title,
+            fontWeight: "bold",
+            marginBottom: customTheme.spacing(3),
+            textAlign: "center",
+            color: customTheme.colors.primary,
+        },
+
+        button: {
+            backgroundColor: customTheme.colors.secondary,
+            paddingVertical: customTheme.spacing(2),
+            borderRadius: 8,
+            marginBottom: customTheme.spacing(2),
+            alignItems: "center",
+            justifyContent: "center",
+        },
+
+        buttonText: {
+            color: customTheme.colors.textSecondary,
+            fontSize: customTheme.fontSize.normal,
+            fontWeight: "bold",
+        },
+
+        label: {
+            fontSize: customTheme.fontSize.normal,
+            fontWeight: "600",
+            marginBottom: customTheme.spacing(1),
+            color: customTheme.colors.primary,
+        },
+
+        input: {
+            width: "100%",
+            backgroundColor: "#FFFFFF",
+            borderWidth: 2,
+            borderColor: customTheme.colors.primary,
+            borderRadius: 8,
+            padding: customTheme.spacing(1.5),
+            fontSize: customTheme.fontSize.normal,
+            color: customTheme.colors.textPrimary, 
+            marginBottom: customTheme.spacing(2),
+        },
+
+        error: {
+            color: customTheme.colors.error,
+            fontSize: customTheme.fontSize.small,
+            marginBottom: customTheme.spacing(1),
+            textAlign: "center",
+        },
+
+        buttonDeshabilitado: {
+            // Añadimos transparencia y opacidad al diseño
+            backgroundColor: customTheme.colors.secondary + "55",
+            opacity: 0.6,
+        },
+
+        buttonCancelar: {
+            backgroundColor: customTheme.colors.error,
+            paddingVertical: customTheme.spacing(2),
+            borderRadius: 8,
+            marginTop: customTheme.spacing(1),
+            alignItems: "center",
+        },
+
+    });
 
 
-    const aceptar = () => {
-        router.push("/pages/Confirmacion")
-    }
+function PagoTarjeta() {
 
-    const cancelar = () => {
-        router.push("/pages/Home")
+    const { total } = useLocalSearchParams();
+
+    const [tarjeta, setTarjeta] = useState("");
+    const [error, setError] = useState("");
+
+    const validarTarjeta = (value: string) => {
+        setTarjeta(value);
+
+        if (!/^\d*$/.test(value)) {
+            setError("Solo se permiten números");
+            return false;
+        }
+
+        if (value.length != 4) {
+            setError("Ingrese los 4 dígitos correctos para pagar");
+            return false;
+        }
+
+        setError("");
+        return true;
+    };
+
+    const handlePagar = () => {
+
+        if (!validarTarjeta(tarjeta)) {
+            return;
+        }
+
+        // Aquí hago la lógica del backend para verificar que la tarjeta pertenece 
+        // al usuario concreto
+        console.log("El usuario a pagado con la tarjeta con pin: ", tarjeta);
+
+        // Navegamos a la pantalla de confirmación
+        router.push("/pages/Confirmacion");
+
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={styles.container}>
+        
+            <Text style={styles.label}>Total a pagar: {total} €</Text>
 
-            <Menu />
+            <Text style={styles.label}>
+                Ingrese el número de la tarjeta:
+            </Text>
 
-            <Text style={{ marginBottom: 25, fontSize: 20 }}>tarjeta</Text>
+            {/* Modificamos el textInput para que no muestre el número de la tarjeta cuando se escribe */}
+            <TextInput
+                style={styles.input}
+                placeholder="Número tarjeta:"
+                secureTextEntry={true}
+                keyboardType="number-pad"
+                value={tarjeta}
+                onChangeText={validarTarjeta}
+                maxLength={16}
+            />
 
-            <View style={{ flexDirection: "row" }}>
-                <Button style={{ marginTop: 25, width: 150 }} onPress={aceptar}>aceptar</Button>
-                <Button style={{ marginTop: 25, width: 150 }} onPress={cancelar}>cancelar</Button>
-            </View>
+            {/* Mensaje de error */}
+            {error !== "" && <Text style={styles.error}>{error}</Text>}
+
+            {/* Botón para aceptar */}
+            <Pressable
+                style={[styles.button, error !== "" && styles.buttonDeshabilitado]}
+                onPress={handlePagar}
+                disabled={error !== ""}
+            >
+                <Text style={styles.buttonText}>Aceptar</Text>
+            </Pressable>
+
+            {/* Botón para cancelar */}
+            <Pressable
+                style={[styles.button, styles.buttonCancelar]}
+                onPress={() => router.push("/pages/Home")}
+            >
+                <Text style={styles.buttonText}>Cancelar</Text>
+            </Pressable>
         </View>
     );
 }
+
+
+
+export default PagoTarjeta;
