@@ -5,7 +5,7 @@ function Index() {
 
     // Importamos la ruta padre el índice de la aplicación 
     // como la primera que aparece
-    <Redirect href="./home"/>
+    <Redirect href="../pages/Home"/>
   );
 }
 export default Index;
