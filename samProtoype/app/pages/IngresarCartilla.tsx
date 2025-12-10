@@ -1,6 +1,8 @@
 import { router } from "expo-router";
+import { collection, getDocs } from "firebase/firestore";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { db } from '../firebase/firebaseConfig';
 import customTheme from "../theme/Theme";
 
 const styles = StyleSheet.create({
@@ -50,6 +52,12 @@ const styles = StyleSheet.create({
         fontSize: customTheme.fontSize.normal,
         fontWeight: "bold",
     },
+    error: {
+        color: customTheme.colors.error,
+        fontSize: customTheme.fontSize.small,
+        marginBottom: customTheme.spacing(1),
+        textAlign: "center",
+    },
 });
 
 function IngresarCart() {
@@ -64,22 +72,47 @@ function IngresarCart() {
         }));
     }
 
+    const BuscarUsuarioCartilla = async (numCartilla: string) => {
+        try {
+            const query = await getDocs(collection(db, "usuarios"));
+            let UsuarioExiste = false;
+
+            query.forEach((doc) => {
+                const DatosDelusuario = doc.data();
+                if (DatosDelusuario.NumCartilla === cartilla.Nºcart) {
+                    UsuarioExiste = true;
+                }
+            });
+
+            if (UsuarioExiste) {
+                router.push("/pages/SeleccionConReceta");
+            } else {
+                setError("No se ha encontrado su cartilla");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const aceptar = () => {
-        console.log(cartilla.Nºcart)
-        router.push("/pages/SeleccionConReceta")
-    }
+        BuscarUsuarioCartilla(cartilla.Nºcart);
+    };
 
     const cancelar = () => {
         router.push("/pages/Home")
     }
+
+    const [error, setError] = useState("");
 
     return (
         <View style={styles.container}>
 
             <Text style={styles.label}>Ingrese el número de su cartilla sanitaria</Text>
 
+
             <TextInput placeholder="Nº Cartilla" value={cartilla.Nºcart} onChangeText={cambios} style={styles.input} />
+
+            {error !== "" && <Text style={styles.error}>{error}</Text>}
 
             <View>
                 <Pressable style={[styles.buttonCancelar]} onPress={cancelar}>

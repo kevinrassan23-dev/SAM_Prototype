@@ -1,7 +1,9 @@
 import { router } from "expo-router";
+import { collection, getDocs } from "firebase/firestore";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import Menu from "../components/Menu";
+import { db } from '../firebase/firebaseConfig';
 
 import customTheme from "../theme/Theme";
 
@@ -57,6 +59,12 @@ const styles = StyleSheet.create({
         fontSize: customTheme.fontSize.normal,
         fontWeight: "bold",
     },
+    error: {
+        color: customTheme.colors.error,
+        fontSize: customTheme.fontSize.small,
+        marginBottom: customTheme.spacing(1),
+        textAlign: "center",
+    },
 });
 
 
@@ -80,14 +88,41 @@ function adminlogin() {
         }));
     }
 
+
+
+    const BuscarAdministrador = async () => {
+        try {
+            const query = await getDocs(collection(db, "Administradores"));
+            let administradorExiste = false;
+
+            query.forEach((doc) => {
+                const DatosDelAdmin = doc.data();
+                if (DatosDelAdmin.NombreLogin === admin.usuario && DatosDelAdmin.Contraseña === admin.contraseña) {
+                    administradorExiste = true;
+                }
+            });
+
+            if (administradorExiste) {
+                router.push("/pages/AdminSam");
+            } else {
+                setError("el usuario o contraseña son incorrectos");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+
     const Registrarse = () => {
         console.log(admin)
-        router.push("/pages/AdminSam")
+        BuscarAdministrador()
     }
 
     const cancelar = () => {
         router.push("/pages/Home")
     }
+
+    const [error, setError] = useState("");
 
     return (
         <View style={styles.container}>
@@ -96,9 +131,11 @@ function adminlogin() {
 
             <Text style={styles.label}>Ingrese su nombre y contraseña de administrador</Text>
 
-            <TextInput placeholder="Nombre" value={admin.usuario} onChangeText={cambiousuario} style={styles.input}/>
+            <TextInput placeholder="Nombre" value={admin.usuario} onChangeText={cambiousuario} style={styles.input} />
 
-            <TextInput placeholder="Contraseña" value={admin.contraseña} onChangeText={cambiocontraseña} style={styles.input}/>
+            <TextInput placeholder="Contraseña" value={admin.contraseña} onChangeText={cambiocontraseña} style={styles.input} />
+
+            {error !== "" && <Text style={styles.error}>{error}</Text>}
 
             <View>
 

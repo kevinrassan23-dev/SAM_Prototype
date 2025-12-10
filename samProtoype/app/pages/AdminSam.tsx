@@ -8,8 +8,6 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         padding: customTheme.spacing(2),
-        justifyContent: "center",
-        alignItems: "center",
         backgroundColor: customTheme.colors.background,
     }
 })
@@ -21,7 +19,7 @@ function AdminSam() {
         // extender la pantalla deslizable hacia abajo si 
         // se añade muchos componentes en la pantalla, ideal para el Dashboard
         // Posible reciclar en selección con medicamentos sin receta y con receta
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={{justifyContent: "center", alignItems: "center"}}>
             <Menu/>
             <Dashboard/>
 

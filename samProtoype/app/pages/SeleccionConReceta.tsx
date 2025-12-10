@@ -1,8 +1,11 @@
 import { router } from "expo-router";
-import React, { useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import CheckBox from "react-native-check-box";
+import { db } from '../firebase/firebaseConfig';
 import customTheme from "../theme/Theme";
+
 
 const styles = StyleSheet.create({
     container: {
@@ -86,100 +89,8 @@ function selecionarconreceta() {
         router.push("/pages/Home")
     }
 
-    const placeholder = [
-        {
-            id: '1',
-            label: 'med',
-        },
-        {
-            id: '2',
-            label: 'med',
-        },
-        {
-            id: '3',
-            label: 'med',
-        }, {
-            id: '4',
-            label: 'med',
-        },
-        {
-            id: '5',
-            label: 'med',
-        },
-        {
-            id: '6',
-            label: 'med',
-        }, {
-            id: '7',
-            label: 'med',
-        },
-        {
-            id: '8',
-            label: 'med',
-        },
-        {
-            id: '9',
-            label: 'med',
-        }, {
-            id: '10',
-            label: 'med',
-        },
-        {
-            id: '11',
-            label: 'med',
-        },
-        {
-            id: '12',
-            label: 'med',
-        }, {
-            id: '13',
-            label: 'med',
-        },
-        {
-            id: '14',
-            label: 'med',
-        },
-        {
-            id: '15',
-            label: 'med',
-        }, {
-            id: '16',
-            label: 'med',
-        },
-        {
-            id: '17',
-            label: 'med',
-        },
-        {
-            id: '18',
-            label: 'med',
-        }, {
-            id: '19',
-            label: 'med',
-        },
-        {
-            id: '20',
-            label: 'med',
-        }, {
-            id: '21',
-            label: 'med',
-        },
-        {
-            id: '22',
-            label: 'med',
-        },
-        {
-            id: '23',
-            label: 'med',
-        }, {
-            id: '24',
-            label: 'med',
-        },
-        {
-            id: '25',
-            label: 'med',
-        },
-    ];
+    const [medicamentos, setMedicamentos] = useState<any[]>([]);
+
 
     const [MedElegido, setMedElegido] = useState<string[]>([]);
 
@@ -192,6 +103,24 @@ function selecionarconreceta() {
         });
     };
 
+        const BuscarMedicamentos = async () => {
+            try {
+                const query = await getDocs(collection(db, "Medicamentos"));
+                const medicamentos: any[] = [];
+                query.forEach((doc) => {
+                    const medicamento = doc.data();
+                    medicamentos.push({ ...medicamento, id: doc.id, cartillaAsociada: medicamento.Cartilla_Asociada, Nombre: medicamento.Nombre, Marca: medicamento.Marca, Tipo: medicamento.Tipo, Precio: medicamento.Precio });
+                });
+                setMedicamentos(medicamentos);
+            } catch (err) {
+                console.error("No se encontraron medicamentos: ", err);
+            }
+        };
+
+    useEffect(() => {
+        BuscarMedicamentos();
+    }, []);
+
     return (
         <View style={styles.container}>
 
@@ -200,11 +129,18 @@ function selecionarconreceta() {
             <View style={styles.listContainer}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
 
-                    {placeholder.map((item) => (
-                        <View key={item.id} style={styles.checkItem}>
-                            <CheckBox isChecked={MedElegido.includes(item.id)} onClick={() => checks(item.id)} rightText={item.label} rightTextStyle={styles.checkboxText} />
-                        </View>
-                    ))}
+
+
+                    {medicamentos.length === 0 ? (
+                        <Text>No hay medicamentos disponibles</Text>
+                    ) : (
+                        medicamentos.map((item) => (
+                            <View key={item.id} style={styles.checkItem}>
+                                <CheckBox isChecked={MedElegido.includes(item.id)} onClick={() => checks(item.id)} rightText={` ${item.Nombre} (${item.Tipo}, ${item.Marca})  ${item.Precio}€ `} rightTextStyle={styles.checkboxText}
+                                />
+                            </View>
+                        ))
+                    )}
 
                 </ScrollView>
             </View>
