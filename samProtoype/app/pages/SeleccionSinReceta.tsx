@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {View, Text, ScrollView, Pressable, StyleSheet} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
-import {router} from "expo-router";
-import customTheme from "../theme/Theme"
+import customTheme from "../theme/Theme";
 
 // Importamos el tema
 
@@ -13,8 +13,6 @@ import customTheme from "../theme/Theme"
             container: {
                 flex: 1,
                 padding: customTheme.spacing(2),
-                justifyContent: "center",
-                alignItems: "center",
                 backgroundColor: customTheme.colors.background,
             },
 
@@ -159,7 +157,7 @@ function SeleccionSinReceta() {
     // Cargar medicamentos desde la Firebase
     useEffect(() => {
         const fetchMedicamentos = async () => {
-        const snapshot = await getDocs(collection(db, "medicamentos"));
+        const snapshot = await getDocs(collection(db, "Medicamentos"));
         const data: Medicamento[] = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
@@ -185,7 +183,7 @@ function SeleccionSinReceta() {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={{justifyContent: "center", alignItems: "center"}}>
             <Text style={styles.title}>Opciones disponibles</Text>
 
             {categorias.map((cat) => {

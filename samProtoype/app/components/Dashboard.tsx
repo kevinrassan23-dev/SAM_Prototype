@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { View, Text, TextInput, Pressable, ScrollView, StyleSheet, Alert } from "react-native";
-import customTheme from "../theme/Theme"
+import React, { useState } from "react";
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import customTheme from "../theme/Theme";
 
 // Importamos el tema
 const styles = StyleSheet.create({

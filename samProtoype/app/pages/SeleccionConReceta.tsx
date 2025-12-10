@@ -1,11 +1,85 @@
-import { Button } from "@react-navigation/elements";
 import { router } from "expo-router";
-import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import CheckBox from "react-native-check-box";
-import Menu from "../components/Menu";
+import { db } from '../firebase/firebaseConfig';
+import customTheme from "../theme/Theme";
 
-export default function selecionarconreceta() {
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: customTheme.spacing(2),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: customTheme.colors.background,
+    },
+    title: {
+        fontSize: customTheme.fontSize.title,
+        fontWeight: "bold",
+        color: customTheme.colors.primary,
+        marginVertical: customTheme.spacing(3),
+        textAlign: "center",
+    },
+
+    listContainer: {
+        width: "90%",
+        height: 450,
+        borderWidth: 2,
+        borderColor: customTheme.colors.primary,
+        borderRadius: 10,
+        backgroundColor: "#fff",
+        paddingVertical: customTheme.spacing(1),
+    },
+
+    scrollContent: {
+        alignItems: "flex-start",
+        paddingHorizontal: customTheme.spacing(2),
+    },
+
+    checkItem: {
+        marginVertical: customTheme.spacing(1),
+    },
+
+    checkboxText: {
+        color: customTheme.colors.textPrimary,
+        fontSize: customTheme.fontSize.normal,
+        marginLeft: customTheme.spacing(1),
+    },
+
+    total: {
+        marginTop: customTheme.spacing(3),
+        fontSize: customTheme.fontSize.normal,
+        color: customTheme.colors.primary,
+        fontWeight: "bold",
+    },
+
+    button: {
+        backgroundColor: customTheme.colors.secondary,
+        paddingVertical: customTheme.spacing(2),
+        borderRadius: 8,
+        marginBottom: customTheme.spacing(2),
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    buttonCancelar: {
+        backgroundColor: customTheme.colors.error,
+        paddingVertical: customTheme.spacing(2),
+        borderRadius: 8,
+        marginTop: customTheme.spacing(1),
+        alignItems: "center",
+    },
+
+    buttonText: {
+        color: customTheme.colors.textSecondary,
+        fontSize: customTheme.fontSize.normal,
+        fontWeight: "bold",
+    },
+});
+
+function selecionarconreceta() {
 
     const aceptar = () => {
         router.push("/pages/FormaPago")
@@ -15,100 +89,8 @@ export default function selecionarconreceta() {
         router.push("/pages/Home")
     }
 
-    const placeholder = [
-        {
-            id: '1',
-            label: 'med',
-        },
-        {
-            id: '2',
-            label: 'med',
-        },
-        {
-            id: '3',
-            label: 'med',
-        }, {
-            id: '4',
-            label: 'med',
-        },
-        {
-            id: '5',
-            label: 'med',
-        },
-        {
-            id: '6',
-            label: 'med',
-        }, {
-            id: '7',
-            label: 'med',
-        },
-        {
-            id: '8',
-            label: 'med',
-        },
-        {
-            id: '9',
-            label: 'med',
-        }, {
-            id: '10',
-            label: 'med',
-        },
-        {
-            id: '11',
-            label: 'med',
-        },
-        {
-            id: '12',
-            label: 'med',
-        }, {
-            id: '13',
-            label: 'med',
-        },
-        {
-            id: '14',
-            label: 'med',
-        },
-        {
-            id: '15',
-            label: 'med',
-        }, {
-            id: '16',
-            label: 'med',
-        },
-        {
-            id: '17',
-            label: 'med',
-        },
-        {
-            id: '18',
-            label: 'med',
-        }, {
-            id: '19',
-            label: 'med',
-        },
-        {
-            id: '20',
-            label: 'med',
-        }, {
-            id: '21',
-            label: 'med',
-        },
-        {
-            id: '22',
-            label: 'med',
-        },
-        {
-            id: '23',
-            label: 'med',
-        }, {
-            id: '24',
-            label: 'med',
-        },
-        {
-            id: '25',
-            label: 'med',
-        },
-    ];
+    const [medicamentos, setMedicamentos] = useState<any[]>([]);
+
 
     const [MedElegido, setMedElegido] = useState<string[]>([]);
 
@@ -121,33 +103,61 @@ export default function selecionarconreceta() {
         });
     };
 
+        const BuscarMedicamentos = async () => {
+            try {
+                const query = await getDocs(collection(db, "Medicamentos"));
+                const medicamentos: any[] = [];
+                query.forEach((doc) => {
+                    const medicamento = doc.data();
+                    medicamentos.push({ ...medicamento, id: doc.id, cartillaAsociada: medicamento.Cartilla_Asociada, Nombre: medicamento.Nombre, Marca: medicamento.Marca, Tipo: medicamento.Tipo, Precio: medicamento.Precio });
+                });
+                setMedicamentos(medicamentos);
+            } catch (err) {
+                console.error("No se encontraron medicamentos: ", err);
+            }
+        };
+
+    useEffect(() => {
+        BuscarMedicamentos();
+    }, []);
+
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={styles.container}>
 
-            <Menu />
+            <Text style={styles.title}>Medicamentos Disponibles</Text>
 
-            <Text style={{ marginBottom: 25, fontSize: 30 }}>Medicamentos Disponibles</Text>
+            <View style={styles.listContainer}>
+                <ScrollView contentContainerStyle={styles.scrollContent}>
 
-            <View style={{ width: 300, height: 500, borderWidth: 1 }}>
-                <ScrollView contentContainerStyle={{ flexDirection: "column", alignItems: "center" }} >
 
-                    {placeholder.map((Medis) => (
-                        <View key={Medis.id}>
-                            <CheckBox isChecked={MedElegido.includes(Medis.id)} onClick={() => checks(Medis.id)} rightText={Medis.label} />
-                        </View>
-                    ))}
+
+                    {medicamentos.length === 0 ? (
+                        <Text>No hay medicamentos disponibles</Text>
+                    ) : (
+                        medicamentos.map((item) => (
+                            <View key={item.id} style={styles.checkItem}>
+                                <CheckBox isChecked={MedElegido.includes(item.id)} onClick={() => checks(item.id)} rightText={` ${item.Nombre} (${item.Tipo}, ${item.Marca})  ${item.Precio}€ `} rightTextStyle={styles.checkboxText}
+                                />
+                            </View>
+                        ))
+                    )}
 
                 </ScrollView>
             </View>
-            <Text style={{ marginTop: 20, fontSize: 30 }} >Total: €</Text>
 
-            <View style={{ flexDirection: "row" }}>
-                <Button style={{ marginTop: 25, marginRight: 35, width: 150 }} onPress={cancelar}>Cancelar</Button>
+            <Text style={styles.total}>Total: €</Text>
 
-                <Button style={{ marginTop: 25, width: 150 }} onPress={aceptar}>Aceptar</Button>
+            <View>
+                <Pressable style={[styles.buttonCancelar]} onPress={cancelar}>
+                    <Text style={styles.buttonText}>Cancelar</Text>
+                </Pressable>
+
+                <Pressable style={styles.button} onPress={aceptar}>
+                    <Text style={styles.buttonText}>Aceptar</Text>
+                </Pressable>
             </View>
         </View >
     );
 }
 
-
+export default selecionarconreceta;
