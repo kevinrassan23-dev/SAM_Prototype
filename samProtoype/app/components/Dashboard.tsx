@@ -98,8 +98,10 @@ const styles = StyleSheet.create({
 
 interface userType{
     dni?: string;
-    numCartilla?: string;
+    numCartilla: string;
+    nombre: string;
     numTarjeta: string;
+    medicamentoId?: string;
 }
 
 interface MedicamentoType{
@@ -108,12 +110,12 @@ interface MedicamentoType{
     tipo: string;
     marca: string;
     precio: number;
-    cartillaUser?: string;
 }
 
 const inicializarUser: userType = {
     dni: "",
     numCartilla: "",
+    nombre: "",
     numTarjeta: "",
 };
 
@@ -123,7 +125,6 @@ const inicializarMedicamento: MedicamentoType = {
     tipo: "",
     marca: "",
     precio: 0.0,
-    cartillaUser: "",
 };
 
 
@@ -138,7 +139,7 @@ function Dashboard() {
     
     // Crear/insertar usuarios
     const insertarUsuario = () => {
-        if (!user.numCartilla || !user.numTarjeta || !user.dni) {
+        if (!user.nombre || !user.numCartilla || !user.numTarjeta) {
                 Alert.alert("Error", "Todos los campos del usuario son obligatorios");
             return;
         }
@@ -147,12 +148,12 @@ function Dashboard() {
         setTableData1([...tableData1, nuevo]);
         setUser(inicializarUser);
 
-        Alert.alert("Éxito", "Usuario registrado correctamente");
+        Alert.alert("Éxito", "Usuario registrado");
     };
 
     // Insertar medicamentos
     const insertarMedicamento = () => {
-        if (!medicamento.nombre || !medicamento.tipo || !medicamento.marca || medicamento.cartillaUser || medicamento.precio || medicamento.id) {
+        if (!medicamento.nombre || !medicamento.tipo || !medicamento.marca) {
                 Alert.alert("Error", "Todos los campos son obligatorios");
             return;
         }
@@ -165,7 +166,7 @@ function Dashboard() {
         setTableData2([...tableData2, nuevo]);
         setMedicamento(inicializarMedicamento);
 
-        Alert.alert("Éxito", "Medicamento registrado correctamente");
+        Alert.alert("Éxito", "Medicamento registrado");
     };
 
     const users: userType[] = [];
@@ -197,6 +198,13 @@ function Dashboard() {
 
             <TextInput
                 style={styles.input}
+                placeholder="Nombre"
+                value={user.nombre}
+                onChangeText={(text) => setUser({ ...user, nombre: text })}
+            />
+
+            <TextInput
+                style={styles.input}
                 placeholder="Número Tarjeta"
                 secureTextEntry
                 value={user.numTarjeta}
@@ -211,9 +219,9 @@ function Dashboard() {
                 key={med.id}
                 style={[
                 styles.medicamentoItem,
-                user.numCartilla === med.cartillaUser && styles.medicamentoSeleccionado,
+                user.medicamentoId === med.id && styles.medicamentoSeleccionado,
                 ]}
-                onPress={() => setUser({ ...user, numCartilla: med.cartillaUser })}
+                onPress={() => setUser({ ...user, medicamentoId: med.id })}
             >
                 <Text>{med.nombre} ({med.tipo})</Text>
             </Pressable>
@@ -225,17 +233,10 @@ function Dashboard() {
 
 
             {/* ===================================================== */}
-            {/* = FORMULARIO: INSERTAR MEDICAMENTOS CON RECETA ====== */}
+            {/* ============ FORMULARIO: INSERTAR MEDICAMENTOS ====== */}
             {/* ===================================================== */}
 
             <Text style={styles.title}>Registrar Medicamentos</Text>
-
-            <TextInput
-                style={styles.input}
-                placeholder="Cod_Medicamento"
-                value={medicamento.id}
-                onChangeText={(text) => setMedicamento({ ...medicamento, id: text })}
-            />
 
             <TextInput
                 style={styles.input}
@@ -256,13 +257,6 @@ function Dashboard() {
                 placeholder="Marca"
                 value={medicamento.marca}
                 onChangeText={(text) => setMedicamento({ ...medicamento, marca: text })}
-            />
-
-            <TextInput
-                style={styles.input}
-                placeholder="Usuarios asociados"
-                value={medicamento.cartillaUser}
-                onChangeText={(text) => setMedicamento({ ...medicamento, cartillaUser: text })}
             />
 
             <TextInput
@@ -290,9 +284,11 @@ function Dashboard() {
                     
                     {/* Encabezado de la tabla usuarios */}
                     <View style={[styles.row, styles.headerRow]}>
-                        <Text style={[styles.cell, styles.headerCell]}>DNI</Text>
-                        <Text style={[styles.cell, styles.headerCell]}>Nº Cartilla</Text>
-                        <Text style={[styles.cell, styles.headerCell]}>Nº Tarjeta</Text>
+                    <Text style={[styles.cell, styles.headerCell]}>DNI</Text>
+                    <Text style={[styles.cell, styles.headerCell]}>Nº Cartilla</Text>
+                    <Text style={[styles.cell, styles.headerCell]}>Nombre</Text>
+                    <Text style={[styles.cell, styles.headerCell]}>Nº Tarjeta</Text>
+                    <Text style={[styles.cell, styles.headerCell]}>Medicamento ID</Text>
                     </View>
 
                     {/* Filas de la tabla usuarios */}
@@ -300,7 +296,9 @@ function Dashboard() {
                     <View key={idx} style={styles.row}>
                         <Text style={styles.cell}>{user.dni}</Text>
                         <Text style={styles.cell}>{user.numCartilla}</Text>
+                        <Text style={styles.cell}>{user.nombre}</Text>
                         <Text style={styles.cell}>{user.numTarjeta}</Text>
+                        <Text style={styles.cell}>{user.medicamentoId}</Text>
                     </View>
                     ))}
 
@@ -323,7 +321,6 @@ function Dashboard() {
                     <Text style={[styles.cell, styles.headerCell]}>Nombre</Text>
                     <Text style={[styles.cell, styles.headerCell]}>Tipo</Text>
                     <Text style={[styles.cell, styles.headerCell]}>Marca</Text>
-                    <Text style={[styles.cell, styles.headerCell]}>NºCartilla</Text>
                     <Text style={[styles.cell, styles.headerCell]}>Precio</Text>
                     </View>
 
@@ -334,13 +331,14 @@ function Dashboard() {
                         <Text style={styles.cell}>{m.nombre}</Text>
                         <Text style={styles.cell}>{m.tipo}</Text>
                         <Text style={styles.cell}>{m.marca}</Text>
-                        <Text style={styles.cell}>{m.cartillaUser}</Text>
                         <Text style={styles.cell}>{m.precio}</Text>
                     </View>
                     ))}
 
                 </View>
+
             </ScrollView>
+
         </ScrollView>
 
     );

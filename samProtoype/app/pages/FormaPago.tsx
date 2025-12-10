@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import customTheme from "../theme/Theme";
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
+        width: "100%",
         backgroundColor: customTheme.colors.secondary,
         paddingVertical: customTheme.spacing(2),
         borderRadius: 8,
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
     },
 
     buttonCancelar: {
+        width: "100%",
         backgroundColor: customTheme.colors.error,
         paddingVertical: customTheme.spacing(2),
         borderRadius: 8,
@@ -46,12 +48,14 @@ const styles = StyleSheet.create({
 
 function FormasPago() {
 
+    const { total } = useLocalSearchParams();
+
     const efectivo = () => {
-        router.push("/pages/PagoEfectivo");
+        router.push({ pathname: "/pages/PagoEfectivo", params: { total } });
     }
 
     const tarjeta = () => {
-        router.push("/pages/PagoTarjeta")
+        router.push({ pathname: "/pages/PagoTarjeta", params: { total } });
     }
 
     const cancelar = () => {
@@ -63,18 +67,19 @@ function FormasPago() {
 
             <Text style={styles.title}>¿Cómo desea pagar?</Text>
 
-            <Pressable style={styles.button} onPress={efectivo}>
-                <Text style={styles.buttonText}>Efectivo</Text>
-            </Pressable>
+            <View style={{ flexDirection: 'column', gap: customTheme.spacing(2) }}>
+                <Pressable style={styles.button} onPress={efectivo}>
+                    <Text style={styles.buttonText}>Efectivo</Text>
+                </Pressable>
 
-            <Pressable style={styles.button} onPress={tarjeta}>
-                <Text style={styles.buttonText}>Tarjeta</Text>
-            </Pressable>
+                <Pressable style={styles.button} onPress={tarjeta}>
+                    <Text style={styles.buttonText}>Tarjeta</Text>
+                </Pressable>
 
-            <Pressable style={styles.buttonCancelar} onPress={cancelar}>
-                <Text style={styles.buttonText}>Cancelar</Text>
-            </Pressable>
-
+                <Pressable style={styles.buttonCancelar} onPress={cancelar}>
+                    <Text style={styles.buttonText}>Cancelar</Text>
+                </Pressable>
+            </View>
         </View>
     );
 }

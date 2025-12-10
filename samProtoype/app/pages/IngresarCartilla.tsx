@@ -37,12 +37,14 @@ const styles = StyleSheet.create({
         marginBottom: customTheme.spacing(2),
         alignItems: "center",
         justifyContent: "center",
+        width: "100%",
     },
 
     buttonCancelar: {
         backgroundColor: customTheme.colors.error,
         paddingVertical: customTheme.spacing(2),
         borderRadius: 8,
+        width: "100%",
         marginTop: customTheme.spacing(1),
         alignItems: "center",
     },
@@ -85,7 +87,7 @@ function IngresarCart() {
             });
 
             if (UsuarioExiste) {
-                router.push("/pages/SeleccionConReceta");
+                router.push({ pathname: "/pages/SeleccionConReceta", params: { numCartilla: cartilla.Nºcart } });
             } else {
                 setError("No se ha encontrado su cartilla");
             }
@@ -114,7 +116,7 @@ function IngresarCart() {
 
             {error !== "" && <Text style={styles.error}>{error}</Text>}
 
-            <View>
+            <View style={{ flexDirection: 'column', gap: customTheme.spacing(2)  }}>
                 <Pressable style={[styles.buttonCancelar]} onPress={cancelar}>
                     <Text style={styles.buttonText}>Cancelar</Text>
                 </Pressable>

@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
+        width: "100%",
         backgroundColor: customTheme.colors.secondary,
         paddingVertical: customTheme.spacing(2),
         borderRadius: 8,
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
     },
 
     buttonCancelar: {
+        width: "100%",
         backgroundColor: customTheme.colors.error,
         paddingVertical: customTheme.spacing(2),
         borderRadius: 8,
@@ -137,7 +139,7 @@ function adminlogin() {
 
             {error !== "" && <Text style={styles.error}>{error}</Text>}
 
-            <View>
+            <View style={{ flexDirection: 'column', gap: customTheme.spacing(2) }}>
 
                 <Pressable style={styles.buttonCancelar} onPress={cancelar}>
                     <Text style={styles.buttonText}>Cancelar</Text>
