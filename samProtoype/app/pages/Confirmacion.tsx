@@ -4,6 +4,65 @@ import {router} from "expo-router";
 import customTheme from "../theme/Theme"
 
 
+function Confirmacion() {
+
+    const [proceso, setProceso] = useState(1);
+
+    useEffect(() => {
+        // Cambiamos al proceso 2 después de 4 segundos
+        setTimeout(() => setProceso(2), 4000);
+
+        // Cambiamos al proceso 3 después de 8 segundos
+        setTimeout(() => setProceso(3), 8000);
+
+        // Regresamos a home automáticamente después de 15 segundos al terminar el proceso 3
+        setTimeout(() => {
+            router.push("/pages/Home");
+
+        }, 15000);
+
+    }, []);
+
+    return(
+
+        <View style={styles.container}>
+            <Text style={styles.titulo}>Estado del Pedido</Text>
+
+            {/* Proceso 1: procesamos pedido cambiando a estado inicial */}
+            <View style={styles.item}>
+
+                <Text style={styles.texto}>
+                    Procesando pedido...
+                </Text>
+
+                {proceso === 1 && <ActivityIndicator size="small" />}
+                {proceso > 1 && <Text style={styles.check}>✔</Text>}
+            </View>
+
+            {/* Proceso 2: el estado del pedido cambia a cargando se está a punto de entregar */}
+            <View style={styles.item}>
+
+                <Text style={styles.texto}>
+                    Cargando pedido para la entrega...
+                </Text>
+
+                {proceso === 2 && <ActivityIndicator size="small" />}
+                {proceso > 2 && <Text style={styles.check}>✔</Text>}
+            </View>
+
+            {/* Proceso 3: El estado del pedido cambia a entregado (su estado final) */}
+            <View style={styles.item}>
+
+                <Text style={styles.texto}>
+                    Pedido entregado
+                </Text>
+
+                {proceso === 3 && <Text style={styles.check}>✔</Text>}
+            </View>
+        </View>
+    );
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -47,65 +106,5 @@ const styles = StyleSheet.create({
         color: customTheme.colors.secondary,
     }
 });
-
-
-function Confirmacion() {
-
-    const [proceso, setProceso] = useState(1);
-
-    useEffect(() => {
-        // Cambiamos al proceso 2 después de 4 segundos
-        setTimeout(() => setProceso(2), 4000);
-
-        // Cambiamos al proceso 3 después de 6 segundos
-        setTimeout(() => setProceso(3), 6000);
-
-        // Regresamos a home automáticamente después de 6 segundos al terminar el proceso 3
-        setTimeout(() => {
-            router.push("/pages/Home");
-
-        }, 6000);
-
-    }, []);
-
-    return(
-
-        <View style={styles.container}>
-            <Text style={styles.titulo}>Estado del Pedido</Text>
-
-            {/* Proceso 1: procesamos pedido cambiando a estado inicial */}
-            <View style={styles.item}>
-
-                <Text style={styles.texto}>
-                    Procesando pedido...
-                </Text>
-
-                {proceso === 1 && <ActivityIndicator size="small" />}
-                {proceso > 1 && <Text style={styles.check}>✔</Text>}
-            </View>
-
-            {/* Proceso 2: el estado del pedido cambia a cargando se está a punto de entregar */}
-            <View style={styles.item}>
-
-                <Text style={styles.texto}>
-                    Cargando pedido para la entrega...
-                </Text>
-
-                {proceso === 2 && <ActivityIndicator size="small" />}
-                {proceso > 2 && <Text style={styles.check}>✔</Text>}
-            </View>
-
-            {/* Proceso 3: El estado del pedido cambia a entregado (su estado final) */}
-            <View style={styles.item}>
-
-                <Text style={styles.texto}>
-                    Pedido entregado
-                </Text>
-
-                {proceso === 3 && <Text style={styles.check}>✔</Text>}
-            </View>
-        </View>
-    );
-}
 
 export default Confirmacion;

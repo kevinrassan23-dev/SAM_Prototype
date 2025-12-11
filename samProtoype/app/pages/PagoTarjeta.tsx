@@ -3,6 +3,84 @@ import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import customTheme from "../theme/Theme";
 
+function PagoTarjeta() {
+
+    const { total } = useLocalSearchParams();
+
+    const [tarjeta, setTarjeta] = useState("");
+    const [error, setError] = useState("");
+
+    const validarTarjeta = (value: string) => {
+        setTarjeta(value);
+
+        if (!/^\d*$/.test(value)) {
+                setError("Solo se permiten números");
+            return false;
+        }
+
+        if (value.length != 4) {
+                setError("Ingrese los 4 dígitos correctos para pagar");
+            return false;
+        }
+
+        setError("");
+        return true;
+    };
+
+    const handlePagar = () => {
+
+        if (!validarTarjeta(tarjeta)) {
+            return;
+        }
+        
+        console.log("El usuario a pagado con la tarjeta con pin: ", tarjeta);
+        router.push("/pages/Confirmacion");
+
+    }
+
+    return (
+        <View style={styles.container}>
+        
+            <Text style={styles.label}>Total a pagar: {total} €</Text>
+
+            <Text style={styles.label}>
+                Ingrese el número de la tarjeta:
+            </Text>
+
+            {/* Modificamos el textInput para que no muestre el número de la tarjeta cuando se escribe */}
+            <TextInput
+                style={styles.input}
+                placeholder="Num tarjeta:"
+                secureTextEntry={true}
+                keyboardType="number-pad"
+                value={tarjeta}
+                onChangeText={validarTarjeta}
+                maxLength={16}
+            />
+
+            {/* Mensaje de error */}
+            {error !== "" && <Text style={styles.error}>{error}</Text>}
+
+            {/* Botón para aceptar */}
+            <Pressable
+                style={[styles.button, error !== "" && styles.buttonDeshabilitado]}
+                onPress={handlePagar}
+                disabled={error !== ""}
+            >
+                <Text style={styles.buttonText}>Aceptar</Text>
+            </Pressable>
+
+            {/* Botón para cancelar */}
+            <Pressable
+                style={[styles.button, styles.buttonCancelar]}
+                onPress={() => router.push("/pages/Home")}
+            >
+                <Text style={styles.buttonText}>Cancelar</Text>
+            </Pressable>
+        </View>
+    );
+}
+
 const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -76,90 +154,5 @@ const styles = StyleSheet.create({
         },
 
     });
-
-
-function PagoTarjeta() {
-
-    const { total } = useLocalSearchParams();
-
-    const [tarjeta, setTarjeta] = useState("");
-    const [error, setError] = useState("");
-
-    const validarTarjeta = (value: string) => {
-        setTarjeta(value);
-
-        if (!/^\d*$/.test(value)) {
-            setError("Solo se permiten números");
-            return false;
-        }
-
-        if (value.length != 4) {
-            setError("Ingrese los 4 dígitos correctos para pagar");
-            return false;
-        }
-
-        setError("");
-        return true;
-    };
-
-    const handlePagar = () => {
-
-        if (!validarTarjeta(tarjeta)) {
-            return;
-        }
-
-        // Aquí hago la lógica del backend para verificar que la tarjeta pertenece 
-        // al usuario concreto
-        console.log("El usuario a pagado con la tarjeta con pin: ", tarjeta);
-
-        // Navegamos a la pantalla de confirmación
-        router.push("/pages/Confirmacion");
-
-    }
-
-    return (
-        <View style={styles.container}>
-        
-            <Text style={styles.label}>Total a pagar: {total} €</Text>
-
-            <Text style={styles.label}>
-                Ingrese el número de la tarjeta:
-            </Text>
-
-            {/* Modificamos el textInput para que no muestre el número de la tarjeta cuando se escribe */}
-            <TextInput
-                style={styles.input}
-                placeholder="Número tarjeta:"
-                secureTextEntry={true}
-                keyboardType="number-pad"
-                value={tarjeta}
-                onChangeText={validarTarjeta}
-                maxLength={16}
-            />
-
-            {/* Mensaje de error */}
-            {error !== "" && <Text style={styles.error}>{error}</Text>}
-
-            {/* Botón para aceptar */}
-            <Pressable
-                style={[styles.button, error !== "" && styles.buttonDeshabilitado]}
-                onPress={handlePagar}
-                disabled={error !== ""}
-            >
-                <Text style={styles.buttonText}>Aceptar</Text>
-            </Pressable>
-
-            {/* Botón para cancelar */}
-            <Pressable
-                style={[styles.button, styles.buttonCancelar]}
-                onPress={() => router.push("/pages/Home")}
-            >
-                <Text style={styles.buttonText}>Cancelar</Text>
-            </Pressable>
-        </View>
-    );
-}
-
-
 
 export default PagoTarjeta;
