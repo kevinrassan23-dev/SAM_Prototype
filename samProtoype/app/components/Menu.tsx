@@ -10,7 +10,7 @@ const { width } = Dimensions.get("window");
 function Menu() {
     const router = useRouter();
     const [open, setOpen] = useState(false);
-    const positionX = useState(new Animated.Value(-width))[0]; // Cambiado a -width
+    const positionX = useState(new Animated.Value(-width))[0]; 
 
     const abrirMenu = () => {
         setOpen(true);
@@ -23,7 +23,7 @@ function Menu() {
 
     const cerrarMenu = () => {
         Animated.timing(positionX, {
-            toValue: -width, // Cambiado para que se oculte completamente
+            toValue: -width, 
             duration: 250,
             useNativeDriver: true,
         }).start(() => setOpen(false));
@@ -31,14 +31,12 @@ function Menu() {
 
     return (
         <>
-            {/* Header fijo en la parte superior */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={abrirMenu}>
                     <MaterialIcons name="menu" size={25} color={theme.colors.primary} />
                 </TouchableOpacity>
             </View>
 
-            {/* OVERLAY - debe estar por encima de todo excepto el drawer */}
             {open && (
                 <TouchableOpacity 
                     style={styles.overlay} 
@@ -47,13 +45,12 @@ function Menu() {
                 />
             )}
 
-            {/* DRAWER - fuera del flujo normal con position absolute */}
             <Animated.View 
                 style={[
                     styles.drawer, 
                     { 
                         transform: [{ translateX: positionX }],
-                        display: open ? 'flex' : 'none' // Ocultar cuando no esté abierto
+                        display: open ? 'flex' : 'none'
                     }
                 ]}
             >
@@ -88,14 +85,13 @@ function Menu() {
 }
 
 const styles = StyleSheet.create({
-    // REMOVIDO el container con flex: 1
-    
+
     header: {
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
-        height: 30, // Altura fija para el encabezado
+        height: 30,
         backgroundColor: theme.colors.background,
         flexDirection: 'row',
         alignItems: 'center',
@@ -103,8 +99,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         zIndex: 1000,
-        elevation: 3, // Sombra para Android
-        shadowColor: "#000", // Sombra para iOS
+        elevation: 3,
+        shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -122,7 +118,7 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         backgroundColor: "#00000066",
-        zIndex: 998, // Debajo del drawer pero encima de todo lo demás
+        zIndex: 998,
     },
 
     drawer: {
@@ -130,13 +126,13 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         bottom: 0,
-        width: width * 0.3, // 70% del ancho de la pantalla
+        width: width * 0.5, 
         backgroundColor: theme.colors.background,
-        paddingTop: 60, // Espacio para el header
+        paddingTop: 60, 
         paddingHorizontal: theme.spacing(2.5),
-        zIndex: 999, // Encima del overlay
-        elevation: 10, // Para Android
-        shadowColor: "#000", // Para iOS
+        zIndex: 999, 
+        elevation: 10, 
+        shadowColor: "#000", 
         shadowOffset: {
             width: 2,
             height: 0,

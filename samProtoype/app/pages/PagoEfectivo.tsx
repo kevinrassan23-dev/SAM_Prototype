@@ -27,7 +27,7 @@ function pagoEfectivo() {
         if (pagoN > totalN) {
             const diferencia = pagoN - totalN;
             setcambio(`Devolviendo ${diferencia}€`);
-            setTimeout(() => { router.push("/pages/Confirmacion") }, 2000);
+            setTimeout(() => { router.push("/pages/Confirmacion") }, 4000);
         } else {
             router.push("/pages/Confirmacion")
         }
@@ -53,12 +53,12 @@ function pagoEfectivo() {
 
                 {cambio !== "" && <Text style={styles.error}>{cambio}</Text>}
 
-                <Pressable style={styles.buttonCancelar} onPress={cancelar}>
-                    <Text style={styles.buttonText}>Cancelar</Text>
-                </Pressable>
-
                 <Pressable style={[styles.button, { backgroundColor: pagovalido ? customTheme.colors.secondary : '#ccc' }]} onPress={aceptar} disabled={!pagovalido}>
                     <Text style={styles.buttonText}>Aceptar</Text>
+                </Pressable>
+
+                <Pressable style={styles.buttonCancelar} onPress={cancelar}>
+                    <Text style={styles.buttonText}>Cancelar</Text>
                 </Pressable>
 
             </View>
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: customTheme.colors.background,
     },
+
     label: {
         fontSize: customTheme.fontSize.normal,
         fontWeight: "600",
@@ -93,30 +94,35 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        width: "100%",
         backgroundColor: customTheme.colors.secondary,
+        flexDirection: "row",
+        width: "80%",
         paddingVertical: customTheme.spacing(2),
-        borderRadius: 8,
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(1),
         alignItems: "center",
         justifyContent: "center",
-        marginHorizontal: customTheme.spacing(1),
     },
 
     buttonCancelar: {
-        width: "100%",
         backgroundColor: customTheme.colors.error,
+        flexDirection: "row",
+        width: "80%",
         paddingVertical: customTheme.spacing(2),
-        borderRadius: 8,
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(1),
         alignItems: "center",
         justifyContent: "center",
-        marginHorizontal: customTheme.spacing(1),
     },
 
     buttonText: {
         color: customTheme.colors.textSecondary,
         fontSize: customTheme.fontSize.normal,
         fontWeight: "bold",
+        flex: 1,
+        textAlign:"center",
     },
+
     error: {
         color: customTheme.colors.error,
         fontSize: customTheme.fontSize.small,

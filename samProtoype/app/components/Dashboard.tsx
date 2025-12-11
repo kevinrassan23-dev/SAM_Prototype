@@ -68,7 +68,6 @@ function Dashboard() {
         }
 
         try {
-            // Usamos el DNI como ID del documento
             await setDoc(doc(db, "usuarios", user.DNI), user);
 
             Alert.alert("Éxito", "Usuario guardado en Firebase");
@@ -106,7 +105,6 @@ function Dashboard() {
         }
     };
 
-    // Insertar medicamentos
     const insertarMedicamento = async () => {
         if (!medicamento.ID_Medicamento || !medicamento.Nombre || !medicamento.Tipo ||
             !medicamento.Marca || !medicamento.Precio || !medicamento.Cartilla_Asociada) {
@@ -148,7 +146,11 @@ function Dashboard() {
 
     return(
 
-        <ScrollView style={styles.mainContainer}>
+        <ScrollView style={styles.mainContainer} 
+            contentContainerStyle={{ paddingBottom: 40 }}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator
+        >
 
             {/* ===================================================== */}
             {/* ============== FORMULARIO: INSERTAR USUARIOS ======== */}
@@ -179,7 +181,7 @@ function Dashboard() {
             />
 
             {/* Selector de medicamento */}
-            <Text style={styles.label}>Asignar medicamento:</Text>
+            <Text style={styles.label}>Relaciones registradas:</Text>
 
             {medicamentos.map((med) => (
             <Pressable
@@ -260,7 +262,9 @@ function Dashboard() {
             {/* ===================================================== */}
             <Text style={styles.title}>Usuarios Registrados</Text>
 
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} 
+                showsHorizontalScrollIndicator
+            >
                 <View style={styles.table}>
                     
                     {/* Encabezado de la tabla usuarios */}
@@ -308,7 +312,9 @@ function Dashboard() {
 
             <Text style={styles.title}>Medicamentos Registrados</Text>
 
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} 
+                showsHorizontalScrollIndicator
+            >
                 <View style={styles.table}>
                     
                     {/* Encabezado de la tabla Medicamentos */}
@@ -348,12 +354,11 @@ function Dashboard() {
     );
 }
 
-// Importamos el tema
 const styles = StyleSheet.create({
     
     mainContainer: {
         flex: 1,
-        padding: customTheme.spacing(2),
+        padding: customTheme.spacing(4),
         backgroundColor: customTheme.colors.background, 
     },
     
@@ -371,6 +376,7 @@ const styles = StyleSheet.create({
         marginTop: customTheme.spacing(2),
         marginBottom: customTheme.spacing(1),
         color: customTheme.colors.primary,
+        textAlign:"center",
     },
 
     input: {

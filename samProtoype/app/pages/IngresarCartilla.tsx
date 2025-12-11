@@ -60,13 +60,15 @@ function IngresarCart() {
             {error !== "" && <Text style={styles.error}>{error}</Text>}
 
             <View style={{ flexDirection: 'column', gap: customTheme.spacing(2)  }}>
-                <Pressable style={[styles.buttonCancelar]} onPress={cancelar}>
-                    <Text style={styles.buttonText}>Cancelar</Text>
-                </Pressable>
 
                 <Pressable style={styles.button} onPress={aceptar}>
                     <Text style={styles.buttonText}>Aceptar</Text>
                 </Pressable>
+                
+                <Pressable style={[styles.buttonCancelar]} onPress={cancelar}>
+                    <Text style={styles.buttonText}>Cancelar</Text>
+                </Pressable>
+
             </View>
         </View>
     );
@@ -97,30 +99,37 @@ const styles = StyleSheet.create({
         color: customTheme.colors.textPrimary,
         marginBottom: customTheme.spacing(2),
     },
+
     button: {
         backgroundColor: customTheme.colors.secondary,
+        flexDirection: "row",
+        width: "80%",
         paddingVertical: customTheme.spacing(2),
-        borderRadius: 8,
-        marginBottom: customTheme.spacing(2),
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(1),
         alignItems: "center",
         justifyContent: "center",
-        width: "100%",
     },
 
     buttonCancelar: {
         backgroundColor: customTheme.colors.error,
+        flexDirection: "row",
+        width: "80%",
         paddingVertical: customTheme.spacing(2),
-        borderRadius: 8,
-        width: "100%",
-        marginTop: customTheme.spacing(1),
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(1),
         alignItems: "center",
+        justifyContent: "center",
     },
 
     buttonText: {
         color: customTheme.colors.textSecondary,
         fontSize: customTheme.fontSize.normal,
         fontWeight: "bold",
+        flex: 1,
+        textAlign:"center",
     },
+
     error: {
         color: customTheme.colors.error,
         fontSize: customTheme.fontSize.small,

@@ -5,7 +5,6 @@ import Menu from "../components/Menu";
 import customTheme from "../theme/Theme";
 
 function Home(){
-    // Pegar el tema
     return(
         <View style={styles.container}>
 
@@ -28,8 +27,6 @@ function Home(){
         </View>
     );
 }
-
-// Importamos el tema
 
     const styles = StyleSheet.create({
         container: {

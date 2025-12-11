@@ -71,75 +71,76 @@ function IngresarDni() {
     );
 }
 
-// Importamos el tema
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: customTheme.spacing(2),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: customTheme.colors.background,
+    },
 
-    const styles = StyleSheet.create({
-            container: {
-                flex: 1,
-                padding: customTheme.spacing(2),
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: customTheme.colors.background,
-            },
+    title: {
+        fontSize: customTheme.fontSize.title,
+        fontWeight: "bold",
+        marginBottom: customTheme.spacing(3),
+        textAlign: "center",
+        color: customTheme.colors.primary,
+    },
 
-            title: {
-                fontSize: customTheme.fontSize.title,
-                fontWeight: "bold",
-                marginBottom: customTheme.spacing(3),
-                textAlign: "center",
-                color: customTheme.colors.primary,
-            },
+    button: {
+        backgroundColor: customTheme.colors.secondary,
+        width: "80%",
+        paddingVertical: customTheme.spacing(2),
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(2),
+        alignItems: "center",
+        justifyContent: "center",
+    },
 
-            button: {
-                backgroundColor: customTheme.colors.secondary,
-                paddingVertical: customTheme.spacing(2),
-                borderRadius: 8,
-                marginBottom: customTheme.spacing(2),
-                alignItems: "center",
-                justifyContent: "center",
-            },
+    buttonCancelar: {
+        backgroundColor: customTheme.colors.error,
+        width: "80%",
+        paddingVertical: customTheme.spacing(2),
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(2),
+        alignItems: "center",
+        justifyContent: "center",
+    },
 
-            buttonCancelar: {
-                backgroundColor: customTheme.colors.error,
-                paddingVertical: customTheme.spacing(2),
-                borderRadius: 8,
-                marginTop: customTheme.spacing(1),
-                alignItems: "center",
-            },
+    buttonText: {
+        color: customTheme.colors.textSecondary,
+        fontSize: customTheme.fontSize.normal,
+        fontWeight: "bold",
+    },
 
-            buttonText: {
-                color: customTheme.colors.textSecondary,
-                fontSize: customTheme.fontSize.normal,
-                fontWeight: "bold",
-            },
+    label: {
+        fontSize: customTheme.fontSize.normal,
+        fontWeight: "600",
+        marginBottom: customTheme.spacing(1),
+        color: customTheme.colors.primary,
+    },
 
-            label: {
-                fontSize: customTheme.fontSize.normal,
-                fontWeight: "600",
-                marginBottom: customTheme.spacing(1),
-                color: customTheme.colors.primary,
-            },
+    input: {
+        width: "100%",
+        backgroundColor: "#FFFFFF",
+        borderWidth: 2,
+        borderColor: customTheme.colors.primary,
+        borderRadius: 8,
+        padding: customTheme.spacing(1.5),
+        fontSize: customTheme.fontSize.normal,
+        color: customTheme.colors.textPrimary, 
+        marginBottom: customTheme.spacing(2),
+    },
 
-            input: {
-                width: "100%",
-                backgroundColor: "#FFFFFF",
-                borderWidth: 2,
-                borderColor: customTheme.colors.primary,
-                borderRadius: 8,
-                padding: customTheme.spacing(1.5),
-                fontSize: customTheme.fontSize.normal,
-                color: customTheme.colors.textPrimary, 
-                marginBottom: customTheme.spacing(2),
-            },
+error: {
+    color: customTheme.colors.error,
+    fontSize: customTheme.fontSize.small,
+    marginBottom: customTheme.spacing(1),
+    textAlign: "center",
+},
 
-        error: {
-            color: customTheme.colors.error,
-            fontSize: customTheme.fontSize.small,
-            marginBottom: customTheme.spacing(1),
-            textAlign: "center",
-        },
-
-    });
+});
 
 
 export default IngresarDni;

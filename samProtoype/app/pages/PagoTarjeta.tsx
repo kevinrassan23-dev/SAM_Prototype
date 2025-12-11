@@ -47,7 +47,6 @@ function PagoTarjeta() {
                 Ingrese el número de la tarjeta:
             </Text>
 
-            {/* Modificamos el textInput para que no muestre el número de la tarjeta cuando se escribe */}
             <TextInput
                 style={styles.input}
                 placeholder="Num tarjeta:"
@@ -58,10 +57,8 @@ function PagoTarjeta() {
                 maxLength={16}
             />
 
-            {/* Mensaje de error */}
             {error !== "" && <Text style={styles.error}>{error}</Text>}
 
-            {/* Botón para aceptar */}
             <Pressable
                 style={[styles.button, error !== "" && styles.buttonDeshabilitado]}
                 onPress={handlePagar}
@@ -70,13 +67,13 @@ function PagoTarjeta() {
                 <Text style={styles.buttonText}>Aceptar</Text>
             </Pressable>
 
-            {/* Botón para cancelar */}
             <Pressable
                 style={[styles.button, styles.buttonCancelar]}
                 onPress={() => router.push("/pages/Home")}
             >
                 <Text style={styles.buttonText}>Cancelar</Text>
             </Pressable>
+
         </View>
     );
 }
@@ -100,8 +97,9 @@ const styles = StyleSheet.create({
 
         button: {
             backgroundColor: customTheme.colors.secondary,
+            width: "80%",
             paddingVertical: customTheme.spacing(2),
-            borderRadius: 8,
+            borderRadius: 10,
             marginBottom: customTheme.spacing(2),
             alignItems: "center",
             justifyContent: "center",
@@ -142,15 +140,23 @@ const styles = StyleSheet.create({
         buttonDeshabilitado: {
             // Añadimos transparencia y opacidad al diseño
             backgroundColor: customTheme.colors.secondary + "55",
+            width: "80%",
+            paddingVertical: customTheme.spacing(2),
+            borderRadius: 10,
+            marginBottom: customTheme.spacing(2),
+            alignItems: "center",
+            justifyContent: "center",
             opacity: 0.6,
         },
 
         buttonCancelar: {
             backgroundColor: customTheme.colors.error,
+            width: "80%",
             paddingVertical: customTheme.spacing(2),
-            borderRadius: 8,
-            marginTop: customTheme.spacing(1),
+            borderRadius: 10,
+            marginBottom: customTheme.spacing(2),
             alignItems: "center",
+            justifyContent: "center",
         },
 
     });

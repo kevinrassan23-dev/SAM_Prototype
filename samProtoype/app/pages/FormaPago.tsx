@@ -58,21 +58,23 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        width: "100%",
         backgroundColor: customTheme.colors.secondary,
+        width: "80%",
+        flexDirection: "row",
         paddingVertical: customTheme.spacing(2),
-        borderRadius: 8,
-        marginTop: customTheme.spacing(2),
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(2),
         alignItems: "center",
         justifyContent: "center",
     },
 
     buttonCancelar: {
-        width: "100%",
         backgroundColor: customTheme.colors.error,
+        width: "80%",
+        flexDirection: "row",
         paddingVertical: customTheme.spacing(2),
-        borderRadius: 8,
-        marginTop: customTheme.spacing(2),
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(2),
         alignItems: "center",
         justifyContent: "center",
     },
@@ -81,6 +83,8 @@ const styles = StyleSheet.create({
         color: customTheme.colors.textSecondary,
         fontSize: customTheme.fontSize.normal,
         fontWeight: "bold",
+        flex: 1,
+        textAlign:"center",
     },
 });
 

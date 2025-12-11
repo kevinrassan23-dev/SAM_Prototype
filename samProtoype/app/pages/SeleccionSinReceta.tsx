@@ -71,35 +71,34 @@ function SeleccionSinReceta() {
                 <ScrollView contentContainerStyle={styles.scrollContent}>
 
                     {medicamentos.length === 0 ? (
-                        <Text>No hay medicamentos disponibles</Text>
+                        <Text>No hay medicamentos disponibles a su numero de cartilla</Text>
                     ) : (
                         medicamentos.map((item) => (
                             <View key={item.id} style={styles.checkItem}>
-                                <CheckBox isChecked={MedElegido.includes(item.id)} onClick={() => checks(item.id)} rightText={` ${item.Nombre} (${item.Tipo}, ${item.Marca})  ${item.Precio}€ `} rightTextStyle={styles.checkboxText}
-                                />
+                                <CheckBox isChecked={MedElegido.includes(item.id)} onClick={() => checks(item.id)} />
+                                <Text style={styles.checkboxText}>{`${item.Nombre} (${item.Tipo}, ${item.Marca}) ${item.Precio}€`}</Text>
                             </View>
                         ))
                     )}
-
                 </ScrollView>
             </View>
 
-            <Text style={styles.total}>Total: {total} €</Text>
+            <Text style={styles.total}>Total: {total}€</Text>
 
-            <View>
-                <Pressable style={[styles.buttonCancelar]} onPress={cancelar}>
-                    <Text style={styles.buttonText}>Cancelar</Text>
+            <View style={{ flexDirection: 'column', gap: customTheme.spacing(1) }}>
+
+                <Pressable style={[styles.button, { backgroundColor: MedElegido.length === 0 ? '#ccc' : customTheme.colors.secondary },]} onPress={aceptar} disabled={MedElegido.length === 0}>
+                    <Text style={styles.buttonText}>Aceptar</Text>
                 </Pressable>
 
-                <Pressable style={styles.button} onPress={aceptar}>
-                    <Text style={styles.buttonText}>Aceptar</Text>
+                <Pressable style={[styles.buttonCancelar]} onPress={cancelar}>
+                    <Text style={styles.buttonText}>Cancelar</Text>
                 </Pressable>
             </View>
         </View >
     );
 }
 
-// Importamos el tema
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -108,12 +107,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: customTheme.colors.background,
     },
+
     title: {
         fontSize: customTheme.fontSize.title,
         fontWeight: "bold",
-        color: customTheme.colors.primary,
-        marginVertical: customTheme.spacing(3),
         textAlign: "center",
+        marginBottom: customTheme.spacing(3),
+        color: customTheme.colors.primary,
     },
 
     listContainer: {
@@ -132,26 +132,31 @@ const styles = StyleSheet.create({
     },
 
     checkItem: {
+        flexDirection: "row",
+        alignItems: "center",
         marginVertical: customTheme.spacing(1),
     },
 
     checkboxText: {
-        color: customTheme.colors.textPrimary,
-        fontSize: customTheme.fontSize.normal,
         marginLeft: customTheme.spacing(1),
+        fontSize: customTheme.fontSize.normal,
+        color: customTheme.colors.textPrimary,
     },
 
     total: {
         marginTop: customTheme.spacing(3),
         fontSize: customTheme.fontSize.normal,
-        color: customTheme.colors.primary,
         fontWeight: "bold",
+        color: customTheme.colors.primary,
+        marginBottom: customTheme.spacing(2),
     },
 
     button: {
         backgroundColor: customTheme.colors.secondary,
+        flexDirection: "row",
+        width: "80%",
         paddingVertical: customTheme.spacing(2),
-        borderRadius: 8,
+        borderRadius: 10,
         marginBottom: customTheme.spacing(2),
         alignItems: "center",
         justifyContent: "center",
@@ -159,16 +164,21 @@ const styles = StyleSheet.create({
 
     buttonCancelar: {
         backgroundColor: customTheme.colors.error,
+        flexDirection: "row",
+        width: "80%",
         paddingVertical: customTheme.spacing(2),
-        borderRadius: 8,
-        marginTop: customTheme.spacing(1),
+        borderRadius: 10,
+        marginBottom: customTheme.spacing(2),
         alignItems: "center",
+        justifyContent: "center",
     },
 
     buttonText: {
         color: customTheme.colors.textSecondary,
         fontSize: customTheme.fontSize.normal,
-        fontWeight: "bold",
+        fontWeight: "600",
+        flex: 1,
+        textAlign:"center",
     },
 });
 
