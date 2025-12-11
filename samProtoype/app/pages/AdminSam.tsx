@@ -4,6 +4,17 @@ import Dashboard from "../components/Dashboard";
 import Menu from "../components/Menu";
 import customTheme from "../theme/Theme";
 
+function AdminSam() {
+
+    return(
+        <ScrollView style={styles.container} contentContainerStyle={{justifyContent: "center", alignItems: "center"}}>
+            <Menu/>
+            <Dashboard/>
+
+        </ScrollView>
+    );
+}
+
 const styles = StyleSheet.create({
     container:{
         flex: 1,
@@ -11,21 +22,4 @@ const styles = StyleSheet.create({
         backgroundColor: customTheme.colors.background,
     }
 })
-
-function AdminSam() {
-
-    return(
-        //ScrollView es un componente que lo que hace es 
-        // extender la pantalla deslizable hacia abajo si 
-        // se añade muchos componentes en la pantalla, ideal para el Dashboard
-        // Posible reciclar en selección con medicamentos sin receta y con receta
-        <ScrollView style={styles.container} contentContainerStyle={{justifyContent: "center", alignItems: "center"}}>
-            <Menu/>
-            <Dashboard/>
-
-        </ScrollView>
-    );
-
-
-}
 export default AdminSam;

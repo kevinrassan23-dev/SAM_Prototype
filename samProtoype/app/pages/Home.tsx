@@ -4,7 +4,29 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Menu from "../components/Menu";
 import customTheme from "../theme/Theme";
 
-// Importamos el tema
+function Home(){
+    return(
+        <View style={styles.container}>
+
+            {/*Importamos el menú oculto */}
+            <Menu/>
+
+            {/* Texto arriba */}
+            <Text style={styles.title}>Seleccione una opción:</Text>
+
+            {/* Botones */}
+            {/* Usamos router.push(/ruta) para navegar a la siguiente página */}
+            <Pressable style={styles.button} onPress={() => router.push("/pages/IngresarCartilla")}>
+                <Text style={styles.buttonText}>Con receta</Text>
+            </Pressable>
+
+            {/* Usamos router.push(/ruta) para navegar a la siguiente página */}
+            <Pressable style={styles.button} onPress={() => router.push("/pages/IngresarDni")}>
+                <Text style={styles.buttonText}>Sin receta</Text>
+            </Pressable>
+        </View>
+    );
+}
 
     const styles = StyleSheet.create({
         container: {
@@ -39,30 +61,5 @@ import customTheme from "../theme/Theme";
             fontWeight: "600",
         },
     });
-
-function Home(){
-    // Pegar el tema
-    return(
-        <View style={styles.container}>
-
-            {/*Importamos el menú oculto */}
-            <Menu/>
-
-            {/* Texto arriba */}
-            <Text style={styles.title}>Seleccione una opción:</Text>
-
-            {/* Botones */}
-            {/* Usamos router.push(/ruta) para navegar a la siguiente página */}
-            <Pressable style={styles.button} onPress={() => router.push("/pages/IngresarCartilla")}>
-                <Text style={styles.buttonText}>Con receta</Text>
-            </Pressable>
-
-            {/* Usamos router.push(/ruta) para navegar a la siguiente página */}
-            <Pressable style={styles.button} onPress={() => router.push("/pages/IngresarDni")}>
-                <Text style={styles.buttonText}>Sin receta</Text>
-            </Pressable>
-        </View>
-    );
-}
 
 export default Home;
