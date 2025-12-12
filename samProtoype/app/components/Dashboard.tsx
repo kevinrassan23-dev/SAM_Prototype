@@ -106,7 +106,7 @@ function Dashboard() {
     };
 
     const insertarMedicamento = async () => {
-        if (!medicamento.ID_Medicamento || !medicamento.Nombre || !medicamento.Tipo ||
+        if (!medicamento.Nombre || !medicamento.Tipo || !medicamento.ID_Medicamento ||
             !medicamento.Marca || !medicamento.Precio || !medicamento.Cartilla_Asociada) {
 
             Alert.alert("Error", "Todos los campos del medicamento son obligatorios");
@@ -114,10 +114,28 @@ function Dashboard() {
         }
 
         try {
-            await addDoc(collection(db, "Medicamentos"), medicamento);
+
+            if (medicamento.ID_Medicamento) {
+                
+                await setDoc(doc(db, "Medicamentos", medicamento.ID_Medicamento), {
+                    Nombre: medicamento.Nombre,
+                    Tipo: medicamento.Tipo,
+                    Marca: medicamento.Marca,
+                    Precio: medicamento.Precio,
+                    Cartilla_Asociada: medicamento.Cartilla_Asociada
+                });
+            } else {
+
+                await addDoc(collection(db, "Medicamentos"), {
+                    Nombre: medicamento.Nombre,
+                    Tipo: medicamento.Tipo,
+                    Marca: medicamento.Marca,
+                    Precio: medicamento.Precio,
+                    Cartilla_Asociada: medicamento.Cartilla_Asociada
+                });
+            }
 
             Alert.alert("Éxito", "Medicamento guardado en Firebase");
-
             setMedicamento(inicializarMedicamento);
             getMedicamentos();
 
@@ -148,7 +166,6 @@ function Dashboard() {
 
         <ScrollView style={styles.mainContainer} 
             contentContainerStyle={{ paddingBottom: 40 }}
-            keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator
         >
 
@@ -340,7 +357,11 @@ function Dashboard() {
 
 
                             <View style={styles.cell}>
-                                    <Pressable style={styles.button} onPress={() => medi.ID_Medicamento && eliminarMedicamento(medi.ID_Medicamento)}>
+                                    <Pressable style={styles.button} onPress={() => {
+                                        if (medi.ID_Medicamento) {
+                                            eliminarMedicamento(medi.ID_Medicamento);
+                                        }}}
+                                    >
                                         <Text style={styles.buttonText}>Eliminar</Text>
                                     </Pressable>
                             </View>
@@ -438,12 +459,12 @@ const styles = StyleSheet.create({
         borderColor: customTheme.colors.secondary,
         minWidth: 140,
         textAlign: "center",
-        color: customTheme.colors.primary, // texto verde
+        color: customTheme.colors.primary,
     },
 
     headerCell: {
         fontWeight: "bold",
-        color: customTheme.colors.textSecondary, // texto blanco en header
+        color: customTheme.colors.textSecondary, 
     },
 });
 
